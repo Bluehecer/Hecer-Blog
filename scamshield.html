@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield App - HECER Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #e0f7fa;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 20px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header img {
+      width: 150px;
+      display: block;
+      margin: 0 auto;
+      animation: glowPulse 4s infinite alternate;
+      filter: drop-shadow(0 0 20px #00e5ff);
+    }
+
+    header h1 {
+      margin: 10px 0 0;
+      font-size: 2.5rem;
+      color: #00e5ff;
+      text-shadow: 0 0 15px #00e5ff;
+      animation: glitch 3s infinite;
+    }
+
+    @keyframes glowPulse {
+      from { filter: drop-shadow(0 0 15px #00e5ff); }
+      to { filter: drop-shadow(0 0 30px #00bfff); }
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px #00bfff, -2px -2px #ff00ff; }
+      20% { text-shadow: -2px 2px #00bfff, 2px -2px #ff00ff; }
+      40% { text-shadow: 2px -2px #00bfff, -2px 2px #ff00ff; }
+      60%, 100% { text-shadow: 0 0 15px #00e5ff; }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 100px auto 50px;
+      padding: 20px;
+      background: rgba(0,0,20,0.7);
+      border-radius: 20px;
+      border: 1px solid #00e5ff33;
+      box-shadow: 0 0 25px rgba(0,229,255,0.2);
+    }
+
+    h2 {
+      color: #00e5ff;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #cfd8dc;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #607d8b;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <img src="hecer.png" alt="HECER Logo">
+    <h1>ScamShield App</h1>
+  </header>
+
+  <main>
+    <h2>About ScamShield</h2>
+    <p>The ScamShield App is a powerful AI-powered protection system that detects scammers in real-time, blocks fraud, and even alerts authorities nearby. It’s designed to provide digital safety for everyone, protecting your calls, messages, and links.</p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Real-time scam detection</li>
+      <li>Automatic blocking of fraud attempts</li>
+      <li>Alerts local authorities for serious threats</li>
+      <li>User-friendly interface</li>
+    </ul>
+
+    <h2>Get Started</h2>
+    <p>Download the app, follow the setup instructions, and experience safer digital life with ScamShield.</p>
+  </main>
+
+  <footer>
+    © 2025 HECER. Back to <a href="index.html" style="color:#00e5ff;">Home</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Layered spheres
+    const spheres = [];
+    const colors = [0x00e5ff,0x00bfff,0x0066ff];
+    const sizes = [20,25,30];
+    const opacities = [0.05,0.03,0.02];
+    for(let i=0;i<3;i++){
+      const geo = new THREE.SphereGeometry(sizes[i],64,64);
+      const mat = new THREE.MeshBasicMaterial({color:colors[i],wireframe:true,transparent:true,opacity:opacities[i]});
+      const sphere = new THREE.Mesh(geo,mat);
+      scene.add(sphere);
+      spheres.push(sphere);
+    }
+
+    // Particles
+    const particles = new THREE.Group();
+    for(let i=0;i<150;i++){
+      const pGeo = new THREE.SphereGeometry(0.1,8,8);
+      const pMat = new THREE.MeshBasicMaterial({color:0x00e5ff});
+      const p = new THREE.Mesh(pGeo,pMat);
+      const radius = 35+Math.random()*15;
+      const theta = Math.random()*2*Math.PI;
+      const phi = Math.random()*Math.PI;
+      p.position.set(
+        radius*Math.sin(phi)*Math.cos(theta),
+        radius*Math.sin(phi)*Math.sin(theta),
+        radius*Math.cos(phi)
+      );
+      particles.add(p);
+    }
+    scene.add(particles);
+
+    camera.position.z = 50;
+    window.addEventListener('resize',()=>{
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth,window.innerHeight);
+    });
+
+    function animate(){
+      requestAnimationFrame(animate);
+      spheres[0].rotation.y+=0.0008;
+      spheres[0].rotation.x+=0.0004;
+      spheres[1].rotation.y-=0.0006;
+      spheres[2].rotation.y+=0.0003;
+      particles.rotation.y+=0.0005;
+      renderer.render(scene,camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

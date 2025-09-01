@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Projects - HECER Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+    body {margin:0;font-family:'Orbitron',sans-serif;background:#000;color:#e0f7fa;overflow-x:hidden;position:relative;}
+    #bgCanvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+    header {text-align:center;padding:20px 20px 10px;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+    header img {width:140px;margin-top:0;animation:glowPulse 4s infinite alternate;filter:drop-shadow(0 0 20px #00e5ff);}
+    header h1 {margin:0;font-size:2.5rem;color:#00e5ff;text-shadow:0 0 15px #00e5ff;animation:glitch 3s infinite;}
+    @keyframes glowPulse {from{filter:drop-shadow(0 0 15px #00e5ff);}to{filter:drop-shadow(0 0 30px #00bfff);}}
+    @keyframes glitch {0%{text-shadow:2px 2px #00bfff,-2px -2px #ff00ff;}20%{text-shadow:-2px 2px #00bfff,2px -2px #ff00ff;}40%{text-shadow:2px -2px #00bfff,-2px 2px #ff00ff;}60%,100%{text-shadow:0 0 15px #00e5ff;}}
+    main {max-width:900px;margin:100px auto 50px;padding:30px;background:rgba(0,0,20,0.7);border-radius:20px;border:1px solid #00e5ff33;box-shadow:0 0 25px rgba(0,229,255,0.2);}
+    h2 {color:#00e5ff;margin-bottom:15px;}
+    h3 {color:#00bfff;margin-bottom:10px;}
+    p, ul {color:#cfd8dc;line-height:1.6;margin-bottom:15px;}
+    ul li {margin-bottom:8px;}
+    img {max-width:100%;border-radius:15px;margin-bottom:15px;}
+    footer {text-align:center;padding:30px;font-size:0.9rem;color:#607d8b;position:relative;z-index:1;}
+    footer a {color:#00e5ff;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <header>
+    <img src="hecer.png" alt="HECER Logo">
+    <h1>Creative Projects</h1>
+  </header>
+  <main>
+    <h2>Unleash Your Creativity</h2>
+    <p>Engaging in creative projects not only enhances your skills but also fosters personal growth. Below are ideas, techniques, and examples to inspire your next project.</p>
+
+    <h3>1. Mind Mapping Your Goals</h3>
+    <p>Create a visual map of your personal development goals. Mind maps help organize thoughts and spark creativity. Tools like <a href="https://www.mindmeister.com" target="_blank">MindMeister</a> make it interactive and fun.</p>
+    <img src="https://selfimprovementsupercharger.com/wp-content/uploads/2017/10/mind-map.jpg" alt="Mind Map Example">
+
+    <h3>2. The 100-Day Project</h3>
+    <p>Commit to a creative endeavor daily for 100 days, such as coding, digital art, or writing. Consistency fosters discipline and creativity. Learn more at <a href="https://www.self.com/story/the-100-day-project-how-to-put-your-passion-into-practice-in-10-minutes-a-day" target="_blank">Self</a>.</p>
+    <img src="https://www.self.com/story/the-100-day-project-how-to-put-your-passion-into-practice-in-10-minutes-a-day" alt="100-Day Project">
+
+    <h3>3. Creative Journaling</h3>
+    <p>Combine writing, sketches, and diagrams to document ideas, experiments, or reflections. Creative journaling enhances self-expression and planning. Examples: <a href="https://getmarlee.com/blog/self-development-activities" target="_blank">Marlee Blog</a>.</p>
+    <img src="https://www.amazon.com/Create-Your-Life-Book-Mixed-Media/dp/1631593536" alt="Creative Journaling">
+
+    <h3>4. Origami & Mindfulness</h3>
+    <p>Origami improves focus and patience. Combine it with tech projects, like 3D printing or design, for a unique blend of creativity. Learn more at <a href="https://www.verywellmind.com/what-is-the-punch-card-trend-11703375" target="_blank">Verywell Mind</a>.</p>
+    <img src="https://www.lettheverseflow.com/personal-growth-creative-self-care/" alt="Origami Mindfulness">
+
+    <h3>5. Personal Development Timeline</h3>
+    <p>Create a timeline showing your growth milestones, achievements, and projects. This visual roadmap keeps you motivated and focused. More inspiration at <a href="https://time.com/4490151/messy-benefits/" target="_blank">Time</a>.</p>
+    <img src="https://cms.boardmix.com/images/articles/personal-growth-timeline.png" alt="Development Timeline">
+
+    <h2>Benefits of Creative Projects</h2>
+    <ul>
+      <li>Enhances problem-solving and innovative thinking</li>
+      <li>Reduces stress and improves emotional well-being</li>
+      <li>Builds self-confidence and discipline</li>
+      <li>Develops new skills and encourages lifelong learning</li>
+    </ul>
+
+    <h2>Recommended Resources</h2>
+    <ul>
+      <li><a href="https://www.ted.com/topics/personal+growth" target="_blank">TED Talks on Creativity & Growth</a></li>
+      <li><a href="https://www.coursera.org/browse/personal-development" target="_blank">Coursera Personal Development Courses</a></li>
+      <li><a href="https://www.headspace.com/meditation" target="_blank">Meditation for Focus & Mindfulness</a></li>
+      <li><a href="https://www.mindmeister.com" target="_blank">Mind Mapping Tools</a></li>
+    </ul>
+  </main>
+  <footer>
+    © 2025 HECER. Back to <a href="index.html">Home</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    // Rotating globe background
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const sphere = new THREE.Mesh(
+      new THREE.SphereGeometry(25, 64, 64),
+      new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.05})
+    );
+    scene.add(sphere);
+
+    camera.position.z = 50;
+    window.addEventListener('resize',()=>{
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth,window.innerHeight);
+    });
+
+    function animate(){
+      requestAnimationFrame(animate);
+      sphere.rotation.y += 0.001;
+      renderer.render(scene,camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
+

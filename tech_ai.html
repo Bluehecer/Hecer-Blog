@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech & AI - HECER Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+    body {margin:0;font-family:'Orbitron',sans-serif;background:#000;color:#e0f7fa;overflow-x:hidden;position:relative;}
+    #bgCanvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+    header {text-align:center;padding:20px 20px 10px;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+    header img {width:140px;margin-top:0;animation:glowPulse 4s infinite alternate;filter:drop-shadow(0 0 20px #00e5ff);}
+    header h1 {margin:0;font-size:2.5rem;color:#00e5ff;text-shadow:0 0 15px #00e5ff;animation:glitch 3s infinite;}
+    @keyframes glowPulse {from{filter:drop-shadow(0 0 15px #00e5ff);}to{filter:drop-shadow(0 0 30px #00bfff);}}
+    @keyframes glitch {0%{text-shadow:2px 2px #00bfff,-2px -2px #ff00ff;}20%{text-shadow:-2px 2px #00bfff,2px -2px #ff00ff;}40%{text-shadow:2px -2px #00bfff,-2px 2px #ff00ff;}60%,100%{text-shadow:0 0 15px #00e5ff;}}
+    main {max-width:1000px;margin:100px auto 50px;padding:30px;background:rgba(0,0,20,0.7);border-radius:20px;border:1px solid #00e5ff33;box-shadow:0 0 25px rgba(0,229,255,0.2);}
+    h2 {color:#00e5ff;margin-bottom:15px;}
+    h3 {color:#00bfff;margin-bottom:10px;}
+    p, ul {color:#cfd8dc;line-height:1.6;margin-bottom:15px;}
+    ul li {margin-bottom:8px;}
+    img {max-width:100%;border-radius:15px;margin-bottom:15px;}
+    a {color:#00e5ff;text-decoration:none;}
+    footer {text-align:center;padding:30px;font-size:0.9rem;color:#607d8b;position:relative;z-index:1;}
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <header>
+    <img src="hecer.png" alt="HECER Logo">
+    <h1>Tech & AI Innovations</h1>
+  </header>
+
+  <main>
+    <h2>ChatGPT-5: OpenAI’s Latest AI</h2>
+    <p>ChatGPT-5, released in 2025, is OpenAI’s most advanced language model yet. It offers:</p>
+    <ul>
+      <li>Adaptive reasoning that adjusts to context</li>
+      <li>Multimodal proficiency for text, image, and code</li>
+      <li>Improved accuracy and reduced hallucinations</li>
+      <li>Enterprise integration in tools like Microsoft 365 Copilot</li>
+    </ul>
+    <p>Applications include coding assistance, complex problem solving, and AI-powered content creation. <a href="https://www.index.dev/blog/chatgpt-5-review?utm_source=chatgpt.com" target="_blank">Source</a></p>
+
+    <h2>Organic Intelligence</h2>
+    <p>Organic Intelligence (OI) is a new AI paradigm inspired by biological systems:</p>
+    <ul>
+      <li>Emulates brain-like processing for efficiency</li>
+      <li>Energy-saving unsupervised learning</li>
+      <li>Human-centric design aligned with values</li>
+    </ul>
+    <p>Companies like AnotherBrain are leading this approach. <a href="https://anotherbrain.ai/en/organic-ai?utm_source=chatgpt.com" target="_blank">Source</a></p>
+    <img src="https://indianai.in/organic-ai" alt="Organic Intelligence Concept">
+
+    <h2>Other Hot Tech Trends in 2025</h2>
+    <ul>
+      <li>Agentic AI: autonomous AI systems for task management (<a href="https://www.techradar.com/pro/the-xdo-blueprint-a-guide-to-enterprise-agentic-ai-implementation?utm_source=chatgpt.com" target="_blank">TechRadar</a>)</li>
+      <li>Open-Source AI models: cost-effective and customizable (<a href="https://medium.com/%40sahin.samia/ai-in-2025-top-trends-reshaping-the-world-right-now-1da71297ba6f?utm_source=chatgpt.com" target="_blank">Medium</a>)</li>
+      <li>AI in Healthcare: diagnostics, treatment, patient care enhancements (<a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-top-trends-in-tech?utm_source=chatgpt.com" target="_blank">McKinsey</a>)</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <p>2025 AI landscape highlights:</p>
+    <ul>
+      <li>ChatGPT-5 brings versatile, creative, and highly accurate AI capabilities.</li>
+      <li>Organic Intelligence introduces biomimetic, energy-efficient AI aligned with humans.</li>
+      <li>Emerging technologies like Agentic AI and open-source models are transforming industries.</li>
+    </ul>
+    <p>These innovations are reshaping how we interact with technology, making AI more intelligent, creative, and integrated into daily life.</p>
+  </main>
+
+  <footer>
+    © 2025 HECER. Back to <a href="index.html">Home</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    // Rotating globe background
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const sphere = new THREE.Mesh(
+      new THREE.SphereGeometry(25, 64, 64),
+      new THREE.MeshBasicMaterial({color:0x00e5ff, wireframe:true, transparent:true, opacity:0.05})
+    );
+    scene.add(sphere);
+
+    camera.position.z = 50;
+    window.addEventListener('resize',()=>{
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth,window.innerHeight);
+    });
+
+    function animate(){
+      requestAnimationFrame(animate);
+      sphere.rotation.y += 0.001;
+      renderer.render(scene,camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
+

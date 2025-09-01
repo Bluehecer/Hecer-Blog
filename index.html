@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HECER Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #000000;
+      color: #e0f7fa;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 20px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header img {
+      width: 140px;
+      animation: glowPulse 4s infinite alternate;
+      filter: drop-shadow(0 0 20px #00e5ff);
+    }
+
+    header h1 {
+      margin: 20px 0 10px;
+      font-size: 3rem;
+      color: #00e5ff;
+      text-shadow: 0 0 15px #00e5ff;
+      animation: glitch 3s infinite;
+    }
+
+    @keyframes glowPulse {
+      from { filter: drop-shadow(0 0 15px #00e5ff); }
+      to { filter: drop-shadow(0 0 30px #00bfff); }
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px #00bfff, -2px -2px #ff00ff; }
+      20% { text-shadow: -2px 2px #00bfff, 2px -2px #ff00ff; }
+      40% { text-shadow: 2px -2px #00bfff, -2px 2px #ff00ff; }
+      60%, 100% { text-shadow: 0 0 15px #00e5ff; }
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: rgba(0, 0, 20, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid #00e5ff33;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.6);
+    }
+
+    .card h2 {
+      color: #00e5ff;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      color: #cfd8dc;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #607d8b;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <img src="hecer.png" alt="HECER Logo">
+    <h1>HECER Blog</h1>
+  </header>
+
+  <section>
+    <a href="scamshield.html" class="card">
+      <h2>ScamShield App</h2>
+      <p>An AI-powered protection system that detects scammers in real-time, blocks fraud, and even alerts authorities nearby. A vision of digital safety for everyone.</p>
+    </a>
+
+    <a href="tech_ai.html" class="card">
+      <h2>Tech & AI</h2>
+      <p>Exploring futuristic technology, coding projects, gadgets, and artificial intelligence shaping the world around us.</p>
+    </a>
+
+    <a href="growth_mind.html" class="card">
+      <h2>Personal Growth & Mind</h2>
+      <p>Thoughts and strategies for focus, productivity, and navigating the challenges of a hyperactive mind in today’s fast-paced world.</p>
+    </a>
+
+    <a href="creative_projects.html" class="card">
+      <h2>Creative Projects</h2>
+      <p>From writing books to unique digital experiments, showcasing the creativity and ideas that fuel innovation.</p>
+    </a>
+
+    <a href="gaming_life.html" class="card">
+      <h2>Gaming & Digital Life</h2>
+      <p>Game reviews, PC setups, digital lifestyle tips, and experiences in the ever-evolving world of gaming.</p>
+    </a>
+
+    <a href="lifestyle.html" class="card">
+      <h2>Lifestyle & Daily Thoughts</h2>
+      <p>Day-to-day reflections, random cool ideas, and moments that make life exciting and worth sharing.</p>
+    </a>
+  </section>
+
+  <footer>
+    © 2025 HECER. Designed with neon vibes ⚡
+  </footer>
+
+  <!-- Three.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Layered wireframe spheres
+    const spheres = [];
+    const colors = [0x00e5ff, 0x00bfff, 0x0066ff];
+    const sizes = [20, 25, 30];
+    const opacities = [0.05, 0.03, 0.02];
+
+    for(let i=0; i<3; i++){
+      const geo = new THREE.SphereGeometry(sizes[i], 64, 64);
+      const mat = new THREE.MeshBasicMaterial({ 
+        color: colors[i], 
+        wireframe: true, 
+        transparent: true, 
+        opacity: opacities[i] 
+      });
+      const sphere = new THREE.Mesh(geo, mat);
+      scene.add(sphere);
+      spheres.push(sphere);
+    }
+
+    // Particles
+    const particleCount = 150;
+    const particles = new THREE.Group();
+    for(let i=0; i<particleCount; i++){
+      const pGeo = new THREE.SphereGeometry(0.1, 8, 8);
+      const pMat = new THREE.MeshBasicMaterial({color: 0x00e5ff});
+      const particle = new THREE.Mesh(pGeo, pMat);
+      const radius = 35 + Math.random()*15;
+      const theta = Math.random()*2*Math.PI;
+      const phi = Math.random()*Math.PI;
+      particle.position.set(
+        radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.sin(phi) * Math.sin(theta),
+        radius * Math.cos(phi)
+      );
+      particles.add(particle);
+    }
+    scene.add(particles);
+
+    camera.position.z = 50;
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function animate(){
+      requestAnimationFrame(animate);
+      spheres[0].rotation.y += 0.0008;
+      spheres[0].rotation.x += 0.0004;
+      spheres[1].rotation.y -= 0.0006;
+      spheres[2].rotation.y += 0.0003;
+
+      particles.rotation.y += 0.0005;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
